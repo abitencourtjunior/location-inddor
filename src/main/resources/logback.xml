@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true" scanPeriod="60 seconds">
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${LOG_PATH:-logs}/location_indoor.log</File>
+		<encoder>
+			<pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%-5level] %logger{36} [%thread]: %m%n</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH:-logs}/location_indoor.%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+	</appender>
+
+
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%-5level] %logger{36} [%thread]: %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="org.springframework" level="WARN" />
+	<logger name="org.hibernate" level="WARN" />
+	<logger name="ch.qos.logback" level="ERROR" />
+	<logger name="org.eclipse.jetty" level="ERROR" />
+	<logger name="ar.com.fdvs" level="ERROR" />
+	<logger name="org.apache.http" level="ERROR" />
+
+	<root level="INFO">
+		<appender-ref ref="FILE" />
+		<appender-ref ref="stdout" />
+	</root>
+
+</configuration>
