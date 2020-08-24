@@ -7,16 +7,11 @@ public class NetworkDto {
     private Long id;
     private String essid;
     private String address;
-    private String frequency;
-    private String level;
 
     public NetworkDto(Network network) {
         this.id = network.getId();
         this.address = network.getAddress();
         this.essid = network.getEssid();
-    }
-
-    public NetworkDto() {
     }
 
     public String getEssid() {
@@ -29,22 +24,6 @@ public class NetworkDto {
 
     public Long getId() {
         return id;
-    }
-
-    public String getFrequency() {
-        return frequency;
-    }
-
-    public void setFrequency(String frequency) {
-        this.frequency = frequency;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
     }
 
     public void setId(Long id) {

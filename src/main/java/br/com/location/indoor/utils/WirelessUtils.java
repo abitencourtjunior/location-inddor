@@ -1,5 +1,6 @@
 package br.com.location.indoor.utils;
 
+import br.com.location.indoor.dto.WirelessDto;
 import br.com.location.indoor.model.Connection;
 
 public class WirelessUtils {
@@ -12,8 +13,8 @@ public class WirelessUtils {
         return con.getRssi() - Math.abs(con.getRssi()) * 9 / 100;
     }
 
-    public static boolean between(Connection connection, Connection con) {
-        if (connection.getRssi() >= minValueInclusive(con) && connection.getRssi() <= maxValueInclusive(con)) {
+    public static boolean between(WirelessDto connection, Connection con) {
+        if (connection.getLevel() >= minValueInclusive(con) && connection.getLevel() <= maxValueInclusive(con)) {
             return true;
         }
 

@@ -2,6 +2,7 @@ package br.com.location.indoor.service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.location.indoor.dto.NetworkDto;
+import br.com.location.indoor.dto.WirelessDto;
 import br.com.location.indoor.model.Connection;
 import br.com.location.indoor.model.Network;
 
@@ -43,16 +45,17 @@ public class ConnectionService {
         }).collect(Collectors.toList());
     }
 
-    public boolean containsAddress(final List<NetworkDto> networks, final String address) {
+    private boolean containsAddress(final List<NetworkDto> networks, final String address) {
         return networks.stream().anyMatch(o -> o.getAddress().equals(address));
     }
 
-    public Long getNetwork(final List<NetworkDto> networks, final String address) {
+    private Long getNetwork(final List<NetworkDto> networks, final String address) {
         return networks.stream().filter(o -> o.getAddress().equals(address)).findFirst().get().getId();
     }
 
-    public Connection getCurrentConnection(final List<Connection> connectionsCurrent, final String name) {
-        return connectionsCurrent.stream().filter(o -> o.getNetwork().getEssid().equals(name)).findFirst().get();
+    public WirelessDto getCurrentConnection(final List<WirelessDto> connectionsCurrent, final String name) {
+        Optional<WirelessDto> wireless = connectionsCurrent.stream().filter(o -> o.getSSID().equals(name)).findFirst();
+        return wireless.isPresent() ? wireless.get() : null;
     }
 
 }

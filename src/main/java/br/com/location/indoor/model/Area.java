@@ -43,4 +43,9 @@ public class Area extends BaseEntity {
         this.connections = connections;
     }
 
+    @Override
+    public String toString() {
+        return "Area [name=" + name + ", pointsInsideTheRoom=" + pointsInsideTheRoom + ", connections=" + connections + "]";
+    }
+
 }
