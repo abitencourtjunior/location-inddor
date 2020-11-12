@@ -63,29 +63,37 @@ public class ScanNetworkService {
     }
 
     public boolean comparateValues(List<Connection> connectionsInDatabase, List<WirelessDto> wirelessDto) {
-        connectionsInDatabase.forEach(con -> {
+        for (Connection con : connectionsInDatabase) {
 
             WirelessDto currentConnection = connectionService.getCurrentConnection(wirelessDto, con.getNetwork().getEssid());
             if (Objects.nonNull(currentConnection)) {
-                if (currentConnection.getLevel() == con.getRssi()) {
-                    LOGGER.info("Encontrado valor igual de RSSI");
-                    findedNetwork.add(true);
-                } else if (WirelessUtils.between(currentConnection, con)) {
-                    LOGGER.info("Encontrado valor parcial");
-                    findedNetwork.add(true);
-                } else {
-                    findedNetwork.add(false);
-                }
+                checkRSSI(con, currentConnection);
             }
 
-        });
+        }
 
         long count = findedNetwork.stream().filter(find -> find.equals(true)).count();
 
-        if (count >= 3) {
+        if (count >= 2) {
             return true;
         }
         return false;
+
+    }
+
+    private void checkRSSI(Connection con, WirelessDto currentConnection) {
+        if (currentConnection.getLevel().equals(con.getRssi())) {
+            LOGGER.info("Encontrado valor igual de RSSI");
+            findedNetwork.add(true);
+            return;
+        }
+        if (WirelessUtils.between(currentConnection, con)) {
+            LOGGER.info("Encontrado valor parcial");
+            findedNetwork.add(true);
+            return;
+        }
+
+        findedNetwork.add(false);
 
     }
 

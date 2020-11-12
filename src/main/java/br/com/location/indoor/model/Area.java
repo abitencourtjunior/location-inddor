@@ -45,7 +45,7 @@ public class Area extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Area [name=" + name + ", pointsInsideTheRoom=" + pointsInsideTheRoom + ", connections=" + connections + "]";
+        return "Area [name=" + name + "]";
     }
 
 }

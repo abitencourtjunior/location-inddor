@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import br.com.location.indoor.dto.WirelessDto;
 import br.com.location.indoor.enumerate.StateWireless;
 
 @Entity
@@ -25,6 +26,18 @@ public class Network extends BaseEntity implements Comparable<Network> {
 
     @OneToMany(mappedBy = "network")
     private List<Connection> connection;
+
+    public Network() {
+    }
+
+    public Network(WirelessDto form) {
+        this.address = form.getBSSID();
+        this.essid = form.getSSID();
+        this.frequency = form.getFrequency().toString();
+        this.signalLevel = form.getLevel().toString();
+        this.protocol = "802.11";
+        this.quality = StateWireless.state(form.getLevel()).name();
+    }
 
     public String getAddress() {
         return address;

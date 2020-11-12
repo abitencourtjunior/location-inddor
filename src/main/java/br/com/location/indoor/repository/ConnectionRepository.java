@@ -8,4 +8,6 @@ import br.com.location.indoor.model.Connection;
 @Repository
 public interface ConnectionRepository extends JpaRepository<Connection, Long> {
 
+    Connection findByNetworkId(Long idNetwork);
+
 }

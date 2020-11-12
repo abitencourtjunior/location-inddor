@@ -30,7 +30,7 @@ public class WirelessController {
         Optional<Area> startScannerWireless = scanNetworkService.startScannerWireless(networks);
         if (startScannerWireless.isPresent()) {
             Area area = startScannerWireless.get();
-            LOGGER.info(area.toString());
+            LOGGER.info("Encontrado localização -> {}", area);
             return new AreaDto(area);
         }
         LOGGER.info("Local não encontrado");

@@ -14,6 +14,8 @@ import br.com.location.indoor.dto.NetworkDto;
 import br.com.location.indoor.dto.WirelessDto;
 import br.com.location.indoor.model.Connection;
 import br.com.location.indoor.model.Network;
+import br.com.location.indoor.repository.ConnectionRepository;
+import br.com.location.indoor.repository.NetworkRepository;
 
 @Service
 public class ConnectionService {
@@ -22,6 +24,12 @@ public class ConnectionService {
 
     @Autowired
     private ScanNetworkService scanNetwork;
+
+    @Autowired
+    private NetworkRepository networkRepository;
+
+    @Autowired
+    private ConnectionRepository connectionRepository;
 
     public List<Connection> getListConnections(List<NetworkDto> networks) {
         try {
@@ -35,7 +43,7 @@ public class ConnectionService {
         return null;
     }
 
-    private List<Connection> handleConnectionCurrent(List<NetworkDto> networks, List<Network> executeScannerNetworks) {
+    public List<Connection> handleConnectionCurrent(List<NetworkDto> networks, List<Network> executeScannerNetworks) {
         return executeScannerNetworks.stream().filter(net -> containsAddress(networks, net.getAddress())).map(conect -> {
             if (containsAddress(networks, conect.getAddress())) {
                 conect.setId(getNetwork(networks, conect.getAddress()));
@@ -45,11 +53,36 @@ public class ConnectionService {
         }).collect(Collectors.toList());
     }
 
+    public List<Connection> handleConnectionCurrent(List<Network> networks) {
+        List<Network> executeScannerNetworks = networkRepository.findAll();
+        if (executeScannerNetworks.isEmpty()) {
+            return networks.stream().map(Connection::new).collect(Collectors.toList());
+        }
+        return executeScannerNetworks.stream()
+                .filter(net -> containsAddressV2(networks, net.getAddress()))
+                .map(conect -> {
+                    if (containsAddressV2(networks, conect.getAddress())) {
+                        Long idNetwork = getNetworkV2(networks, conect.getAddress());
+                        conect.setId(idNetwork);
+                        return new Connection(conect);
+                    }
+                    return null;
+                }).collect(Collectors.toList());
+    }
+
     private boolean containsAddress(final List<NetworkDto> networks, final String address) {
         return networks.stream().anyMatch(o -> o.getAddress().equals(address));
     }
 
+    private boolean containsAddressV2(final List<Network> networks, final String address) {
+        return networks.stream().anyMatch(o -> o.getAddress().equals(address));
+    }
+
     private Long getNetwork(final List<NetworkDto> networks, final String address) {
+        return networks.stream().filter(o -> o.getAddress().equals(address)).findFirst().get().getId();
+    }
+
+    private Long getNetworkV2(final List<Network> networks, final String address) {
         return networks.stream().filter(o -> o.getAddress().equals(address)).findFirst().get().getId();
     }
 
