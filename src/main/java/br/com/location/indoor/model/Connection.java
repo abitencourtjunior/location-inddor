@@ -37,7 +37,8 @@ public class Connection extends BaseEntity {
     public Connection(Network conect) {
         this.network = conect;
         this.signalLevel = network.getSignalLevel();
-        this.rssi = network.getRssi();
+        this.rssi = Integer.parseInt(network.getSignalLevel());
+
     }
 
     @Override

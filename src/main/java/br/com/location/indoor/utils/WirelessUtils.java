@@ -6,11 +6,11 @@ import br.com.location.indoor.model.Connection;
 public class WirelessUtils {
 
     public static Integer maxValueInclusive(Connection con) {
-        return con.getRssi() + Math.abs(con.getRssi()) * 9 / 100;
+        return con.getRssi() + Math.abs(con.getRssi()) * 10 / 100;
     }
 
     public static Integer minValueInclusive(Connection con) {
-        return con.getRssi() - Math.abs(con.getRssi()) * 9 / 100;
+        return con.getRssi() - Math.abs(con.getRssi()) * 10 / 100;
     }
 
     public static boolean between(WirelessDto connection, Connection con) {

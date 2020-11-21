@@ -27,6 +27,10 @@ public class WirelessController {
 
     @PostMapping
     public AreaDto createUser(@RequestBody List<WirelessDto> networks) {
+        networks.stream().forEach(w -> {
+            LOGGER.info("Networks: {}", w.toString());
+        });
+
         Optional<Area> startScannerWireless = scanNetworkService.startScannerWireless(networks);
         if (startScannerWireless.isPresent()) {
             Area area = startScannerWireless.get();

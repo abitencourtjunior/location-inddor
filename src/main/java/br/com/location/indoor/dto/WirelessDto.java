@@ -74,7 +74,7 @@ public class WirelessDto {
 
     @Override
     public String toString() {
-        return "WirelessDto [bSSID=" + bSSID + ", sSID=" + sSID + ", capabilities=" + capabilities + ", frequency=" + frequency + ", level=" + level + ", timestamp=" + timestamp + "]";
+        return "WirelessDto [bSSID=" + bSSID + ", sSID=" + sSID + ", level=" + level + "]";
     }
 
 }

@@ -1,5 +1,6 @@
 package br.com.location.indoor.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -11,7 +12,12 @@ public class Route extends BaseEntity {
 
     private String initialLocation;
     private String finalLocation;
+
+    @Column(length = 3000)
     private String steps;
+
+    public Route() {
+    }
 
     public Route(RouteFormDto routeForm) {
         this.initialLocation = routeForm.getInitialLocation();

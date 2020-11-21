@@ -16,13 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.location.indoor.dto.AreaDto;
 import br.com.location.indoor.dto.AreaFormDto;
 import br.com.location.indoor.service.AreaService;
-import br.com.location.indoor.service.ConnectionService;
 
 @RestController
 @RequestMapping(value = "/v1/area")
 public class AreaController {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(ConnectionService.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(AreaController.class);
 
     @Autowired
     private AreaService areaService;
